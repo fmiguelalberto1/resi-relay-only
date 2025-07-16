@@ -1,0 +1,148 @@
+name: resi-relay-only
+
+topology:
+  defaults:
+    kind: nokia_sros
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:24.10.1
+      # license is required to run IXR-DNX and 7730 on Containerlab
+      license: ../license-srl24.10.txt
+    nokia_sros:
+      image: vrnetlab/nokia_sros:24.10.R2
+      license: ../license-sros-24.txt
+    linux:
+      image: fmiguelalberto/ubuntu-miguel6:latest
+    # linux:
+    #  image: fmiguelalberto/bngblaster:latest
+  nodes:
+    dhcp-server:
+      #sr-1
+      kind: nokia_sros
+      type: sr-1
+      startup-config: ./config/dhcp-server.cfg
+      ports:
+        - 50701:22
+      labels:
+        graph-posX: "835"
+        graph-posY: "205"
+        graph-groupLabelPos: bottom-center
+    bng1:
+      # SR-1
+      kind: nokia_sros
+      type: cpu=2 ram=4 slot=A chassis=sr-1 card=iom-1 mda/1=me6-100gb-qsfp28
+      startup-config: ./config/bng1.cfg
+      ports:
+        - 50101:22
+      labels:
+        graph-posX: "735"
+        graph-posY: "155"
+        graph-groupLabelPos: bottom-center
+    bng2:
+      # SR-1
+      kind: nokia_sros
+      type: sr-1
+      startup-config: ./config/bng2.cfg
+      ports:
+        - 50201:22
+      labels:
+        graph-posX: "735"
+        graph-posY: "215"
+        graph-groupLabelPos: bottom-center
+    agg1:
+      # IXR-X1
+      kind: nokia_sros
+      type: >-
+        cp: cpu=2 ram=3 slot=A chassis=IXR-X card=imm32-qsfp28+4-qsfpdd ___  lc:
+        cpu=2 ram=4 max_nics=36 slot=1 chassis=IXR-X card=imm32-qsfp28+4-qsfpdd
+        mda/1=m32-qsfp28+4-qsfpdd
+      startup-config: ./config/agg1.cfg
+      ports:
+        - 50301:22
+      labels:
+        graph-posX: "615"
+        graph-posY: "155"
+        graph-groupLabelPos: bottom-center
+    agg2:
+      # IXR-X1
+      kind: nokia_sros
+      type: >-
+        cp: cpu=2 ram=3 slot=A chassis=IXR-X card=imm32-qsfp28+4-qsfpdd ___  lc:
+        cpu=2 ram=4 max_nics=36 slot=1 chassis=IXR-X card=imm32-qsfp28+4-qsfpdd
+        mda/1=m32-qsfp28+4-qsfpdd
+      startup-config: ./config/agg2.cfg
+      ports:
+        - 50401:22
+      labels:
+        graph-posX: "615"
+        graph-posY: "215"
+        graph-groupLabelPos: bottom-center
+    olt1:
+      # SR-1
+      kind: nokia_sros
+      type: sr-1
+      startup-config: ./config/olt1.cfg
+      ports:
+        - 50501:22
+      labels:
+        graph-posX: "485"
+        graph-posY: "165"
+        graph-groupLabelPos: bottom-center
+    olt2:
+      # SR-1
+      kind: nokia_sros
+      type: sr-1
+      startup-config: ./config/olt2.cfg
+      ports:
+        - 50601:22
+      labels:
+        graph-posX: "485"
+        graph-posY: "215"
+        graph-groupLabelPos: bottom-center
+    host1:
+      kind: linux
+      ports:
+        - 51101:22
+      labels:
+        graph-posX: "375"
+        graph-posY: "135"
+        graph-groupLabelPos: bottom-center
+    host2:
+      kind: linux
+      ports:
+        - 51201:22
+      labels:
+        graph-posX: "375"
+        graph-posY: "215"
+        graph-groupLabelPos: bottom-center
+    host3:
+      kind: linux
+      image: fmiguelalberto/bngblaster
+      labels:
+        graph-posX: "375"
+        graph-posY: "185"
+        graph-groupLabelPos: bottom-center
+    gnmic:
+      kind: linux
+      ports:
+        - 51301:22
+      exec:
+        - ip addr add 10.1.8.8/24 dev eth1
+      labels:
+        graph-posX: "845"
+        graph-posY: "165"
+        graph-groupLabelPos: bottom-center
+  links:
+    - endpoints: [ "bng1:eth2", "bng2:eth2" ]
+    - endpoints: [ "bng1:eth1", "agg1:eth1" ]
+    - endpoints: [ "bng2:eth1", "agg2:eth1" ]
+    - endpoints: [ "agg1:eth3", "olt1:eth3" ]
+    - endpoints: [ "agg1:eth2", "agg2:eth2" ]
+    - endpoints: [ "agg2:eth3", "olt2:eth3" ]
+    - endpoints: [ "host1:eth1", "olt1:eth1" ]
+    - endpoints: [ "olt1:eth2", "olt2:eth2" ]
+    - endpoints: [ "olt2:eth1", "host2:eth1" ]
+    - endpoints: [ "bng1:eth3", "dhcp-server:eth1" ]
+    - endpoints: [ "bng2:eth3", "dhcp-server:eth2" ]
+    - endpoints: [ "bng1:eth5", "gnmic:eth1" ]
+    - endpoints: [ "olt1:eth5", "host3:eth1" ]
