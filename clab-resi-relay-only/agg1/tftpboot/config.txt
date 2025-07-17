@@ -1,0 +1,572 @@
+# TiMOS-C-24.10.R2 cpm/x86_64 Nokia 7250 IXR Copyright (c) 2000-2024 Nokia.
+# All rights reserved. All use subject to applicable license agreements.
+# Built on Wed Dec 18 23:49:33 UTC 2024 by builder in /builds/2410B/R2/panos/main/sros
+# Configuration format version 24.10 revision 0
+
+# Generated WED JUL 16 22:09:22 2025 UTC
+
+exit all
+configure
+#--------------------------------------------------
+echo "System Configuration"
+#--------------------------------------------------
+    system
+        name "agg1"
+        config-backup 5
+        dns
+            address-pref ipv6-first
+        exit
+        netconf
+            listen
+                no shutdown
+            exit
+        exit
+        snmp
+            streaming
+                no shutdown
+            exit
+            packet-size 9216
+        exit
+        time
+            sntp
+                shutdown
+            exit
+            zone UTC
+        exit
+    exit
+#--------------------------------------------------
+echo "System Security Configuration"
+#--------------------------------------------------
+    system
+        security
+            profile "administrative"
+                netconf
+                    base-op-authorization
+                        action
+                        cancel-commit
+                        close-session
+                        commit
+                        copy-config
+                        create-subscription
+                        delete-config
+                        discard-changes
+                        edit-config
+                        get
+                        get-config
+                        get-data
+                        get-schema
+                        kill-session
+                        lock
+                        validate
+                    exit
+                exit
+                entry 10
+                    match "configure system security"
+                    action permit
+                exit
+                entry 20
+                    match "show system security"
+                    action permit
+                exit
+                entry 30
+                    match "tools perform security"
+                    action permit
+                exit
+                entry 40
+                    match "tools dump security"
+                    action permit
+                exit
+                entry 42
+                    match "tools dump system security"
+                    action permit
+                exit
+                entry 50
+                    match "admin system security"
+                    action permit
+                exit
+                entry 100
+                    match "configure li"
+                    action deny
+                exit
+                entry 110
+                    match "show li"
+                    action deny
+                exit
+                entry 111
+                    match "clear li"
+                    action deny
+                exit
+                entry 112
+                    match "tools dump li"
+                    action deny
+                exit
+            exit
+            user "admin"
+                password "$2y$10$TQrZlpBDra86.qoexZUzQeBXDY1FcdDhGWdD9lLxMuFyPVSm0OGy6"
+                access console ftp netconf grpc
+                no restricted-to-home
+                console
+                    member "administrative"
+                exit
+            exit
+            snmp
+                community "76HzdddhlPpRo1Vql+ZB5spLqccgYQ==" hash2 r version v2c
+            exit
+            no per-peer-queuing
+            telnet
+            exit
+        exit
+    exit
+#--------------------------------------------------
+echo "System Login Control Configuration"
+#--------------------------------------------------
+    system
+        login-control
+            ssh
+                inbound-max-sessions 30
+            exit
+        exit
+    exit
+#--------------------------------------------------
+echo "Log Configuration"
+#--------------------------------------------------
+    log
+        log-id 23 name "23"
+            from debug-trace
+            to memory
+            no shutdown
+        exit
+    exit
+#--------------------------------------------------
+echo "System gRPC Configuration"
+#--------------------------------------------------
+    system
+        grpc
+            allow-unsecure-connection
+            no shutdown
+        exit
+    exit
+#--------------------------------------------------
+echo "Oper-Groups (Declarations) Configuration"
+#--------------------------------------------------
+    service
+    exit
+#--------------------------------------------------
+echo "Card Configuration"
+#--------------------------------------------------
+    card 1
+        card-type imm32-qsfp28+4-qsfpdd
+        mda 1
+            no shutdown
+        exit
+        no shutdown
+    exit
+#--------------------------------------------------
+echo "Connector Configuration"
+#--------------------------------------------------
+    port 1/1/c1
+        connector
+            breakout c1-100g
+        exit
+        no shutdown
+    exit
+    port 1/1/c2
+        connector
+            breakout c1-100g
+        exit
+        no shutdown
+    exit
+    port 1/1/c3
+        connector
+            breakout c1-100g
+        exit
+        no shutdown
+    exit
+    port 1/1/c4
+        connector
+            breakout c1-100g
+        exit
+        no shutdown
+    exit
+    port 1/1/c5
+        connector
+            breakout c1-100g
+        exit
+        no shutdown
+    exit
+    port 1/1/c6
+        connector
+            breakout c1-100g
+        exit
+        no shutdown
+    exit
+    port 1/1/c7
+        shutdown
+    exit
+    port 1/1/c8
+        shutdown
+    exit
+    port 1/1/c9
+        shutdown
+    exit
+    port 1/1/c10
+        shutdown
+    exit
+    port 1/1/c11
+        shutdown
+    exit
+    port 1/1/c12
+        shutdown
+    exit
+    port 1/1/c13
+        shutdown
+    exit
+    port 1/1/c14
+        shutdown
+    exit
+    port 1/1/c15
+        shutdown
+    exit
+    port 1/1/c16
+        shutdown
+    exit
+    port 1/1/c17
+        shutdown
+    exit
+    port 1/1/c18
+        shutdown
+    exit
+    port 1/1/c19
+        shutdown
+    exit
+    port 1/1/c20
+        shutdown
+    exit
+    port 1/1/c21
+        shutdown
+    exit
+    port 1/1/c22
+        shutdown
+    exit
+    port 1/1/c23
+        shutdown
+    exit
+    port 1/1/c24
+        shutdown
+    exit
+    port 1/1/c25
+        shutdown
+    exit
+    port 1/1/c26
+        shutdown
+    exit
+    port 1/1/c27
+        shutdown
+    exit
+    port 1/1/c28
+        shutdown
+    exit
+    port 1/1/c29
+        shutdown
+    exit
+    port 1/1/c30
+        shutdown
+    exit
+    port 1/1/c31
+        shutdown
+    exit
+    port 1/1/c32
+        shutdown
+    exit
+    port 1/1/c33
+        shutdown
+    exit
+    port 1/1/c34
+        shutdown
+    exit
+    port 1/1/c35
+        shutdown
+    exit
+    port 1/1/c36
+        shutdown
+    exit
+#--------------------------------------------------
+echo "Port Configuration"
+#--------------------------------------------------
+    port 1/1/c1/1
+        ethernet
+            mode hybrid
+            encap-type dot1q
+            mtu 9212
+        exit
+        no shutdown
+    exit
+    port 1/1/c2/1
+        ethernet
+            mode hybrid
+            encap-type dot1q
+            mtu 9212
+        exit
+        no shutdown
+    exit
+    port 1/1/c3/1
+        ethernet
+            mode hybrid
+            encap-type dot1q
+            mtu 9212
+        exit
+        no shutdown
+    exit
+    port 1/1/c4/1
+        ethernet
+            mode hybrid
+            encap-type dot1q
+            mtu 9212
+        exit
+        no shutdown
+    exit
+    port 1/1/c5/1
+        ethernet
+            mode hybrid
+            encap-type dot1q
+            mtu 9212
+        exit
+        no shutdown
+    exit
+    port 1/1/c6/1
+        ethernet
+            mode hybrid
+            encap-type dot1q
+            mtu 9212
+        exit
+        no shutdown
+    exit
+    port A/1
+    exit
+#--------------------------------------------------
+echo "System Sync-If-Timing Configuration"
+#--------------------------------------------------
+    system
+        sync-if-timing
+            begin
+            commit
+        exit
+    exit
+#--------------------------------------------------
+echo "Management Router Configuration"
+#--------------------------------------------------
+    router management
+    exit
+
+#--------------------------------------------------
+echo "Router (Network Side) Configuration"
+#--------------------------------------------------
+    router Base
+        interface "loop2"
+            address 11.11.11.3/32
+            loopback
+            ingress
+            exit
+            no shutdown
+        exit
+        interface "system"
+            address 10.10.10.3/32
+            no shutdown
+        exit
+        interface "to-agg2"
+            address 10.3.4.3/24
+            port 1/1/c2/1:34
+            ingress
+            exit
+            no shutdown
+        exit
+        interface "to-bng1"
+            address 10.1.3.3/24
+            port 1/1/c1/1:13
+            ingress
+            exit
+            no shutdown
+        exit
+        interface "to-olt1"
+            address 10.3.5.3/24
+            port 1/1/c3/1:35
+            ingress
+            exit
+            no shutdown
+        exit
+        autonomous-system 65001
+#--------------------------------------------------
+echo "OSPFv2 Configuration"
+#--------------------------------------------------
+        ospf 0
+            area 0.0.0.0
+                interface "system"
+                    no shutdown
+                exit
+                interface "loop2"
+                    no shutdown
+                exit
+                interface "to-agg2"
+                    no shutdown
+                exit
+                interface "to-bng1"
+                    no shutdown
+                exit
+                interface "to-olt1"
+                    no shutdown
+                exit
+            exit
+            no shutdown
+        exit
+#--------------------------------------------------
+echo "LDP Configuration"
+#--------------------------------------------------
+        ldp
+            import-pmsi-routes
+            exit
+            tcp-session-parameters
+            exit
+            interface-parameters
+                interface "to-agg2" dual-stack
+                    ipv4
+                        no shutdown
+                    exit
+                    no shutdown
+                exit
+                interface "to-bng1" dual-stack
+                    ipv4
+                        no shutdown
+                    exit
+                    no shutdown
+                exit
+                interface "to-olt1" dual-stack
+                    ipv4
+                        no shutdown
+                    exit
+                    no shutdown
+                exit
+            exit
+            targeted-session
+            exit
+            no shutdown
+        exit
+    exit
+
+#--------------------------------------------------
+echo "Service Configuration"
+#--------------------------------------------------
+    service
+        sdp 31 mpls create
+            far-end 10.10.10.1
+            ldp
+            keep-alive
+                shutdown
+            exit
+            no shutdown
+        exit
+        sdp 32 mpls create
+            far-end 10.10.10.2
+            ldp
+            keep-alive
+                shutdown
+            exit
+            no shutdown
+        exit
+        customer 1 name "1" create
+            description "Default customer"
+        exit
+        vprn 1000 name "1000" customer 1 create
+            interface "to-olt" create
+            exit
+        exit
+        vpls 10 name "10" customer 1 create
+            endpoint "red" create
+            exit
+            stp
+                shutdown
+            exit
+            spoke-sdp 31:1001 create
+                no shutdown
+            exit
+            spoke-sdp 32:1001 create
+                no shutdown
+            exit
+            no shutdown
+        exit
+        vprn 1000 name "1000" customer 1 create
+            interface "to-olt" create
+                address 10.42.42.2/30
+                ipv6
+                    address 2301:350::2/64
+                exit
+                sap 1/1/c3/1:10 create
+                exit
+            exit
+            static-route-entry 100.65.0.0/24
+                next-hop 10.42.42.1
+                    no shutdown
+                exit
+            exit
+            bgp-ipvpn
+                mpls
+                    auto-bind-tunnel
+                        resolution any
+                    exit
+                    route-distinguisher 65001:1000
+                    vrf-target target:65001:1000
+                    no shutdown
+                exit
+            exit
+            no shutdown
+        exit
+    exit
+#--------------------------------------------------
+echo "Router (Service Side) Configuration"
+#--------------------------------------------------
+    router Base
+#--------------------------------------------------
+echo "OSPFv2 Configuration"
+#--------------------------------------------------
+        ospf 0
+            no shutdown
+        exit
+#--------------------------------------------------
+echo "BGP Configuration"
+#--------------------------------------------------
+        bgp
+            group "metro"
+                family vpn-ipv4 vpn-ipv6
+                local-as 65001
+                peer-as 65001
+                neighbor 10.10.10.1
+                exit
+            exit
+            group "test-dynamic"
+                family ipv4
+                local-as 65001
+                peer-as 65001
+                neighbor 11.11.11.1
+                    local-address 11.11.11.3
+                exit
+            exit
+            no shutdown
+        exit
+    exit
+
+#--------------------------------------------------
+echo "Log all events for service vprn, log syslog tls-client-profile Configuration"
+#--------------------------------------------------
+    log
+    exit
+#--------------------------------------------------
+echo "System Configuration Mode Configuration"
+#--------------------------------------------------
+    system
+        management-interface
+            configuration-mode classic
+        exit
+    exit
+
+exit all
+
+# Finished WED JUL 16 22:09:22 2025 UTC

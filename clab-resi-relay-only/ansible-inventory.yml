@@ -1,0 +1,40 @@
+all:
+  vars:
+    # The generated inventory is assumed to be used from the clab host.
+    # Hence no http proxy should be used. Therefore we make sure the http
+    # module does not attempt using any global http proxy.
+    ansible_httpapi_use_proxy: false
+  children:
+    linux:
+      hosts:
+        clab-resi-relay-only-gnmic:
+          ansible_host: 172.20.20.9
+        clab-resi-relay-only-host11:
+          ansible_host: 172.20.20.2
+    nokia_sros:
+      vars:
+        ansible_network_os: nokia.sros.md
+        # default connection type for nodes of this kind
+        # feel free to override this in your inventory
+        ansible_connection: ansible.netcommon.network_cli
+        ansible_user: admin
+        ansible_password: admin
+      hosts:
+        clab-resi-relay-only-agg1:
+          ansible_host: 172.20.20.10
+        clab-resi-relay-only-agg2:
+          ansible_host: 172.20.20.11
+        clab-resi-relay-only-bng1:
+          ansible_host: 172.20.20.7
+        clab-resi-relay-only-bng2:
+          ansible_host: 172.20.20.3
+        clab-resi-relay-only-dhcp-server:
+          ansible_host: 172.20.20.4
+        clab-resi-relay-only-olt1:
+          ansible_host: 172.20.20.6
+        clab-resi-relay-only-olt2:
+          ansible_host: 172.20.20.5
+    openwrt:
+      hosts:
+        clab-resi-relay-only-host1:
+          ansible_host: 172.20.20.8

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# SROS devices
+yes | cp ./clab-resi-relay-only/bng1/tftpboot/config.txt ./config/bng1.cfg
+#yes | cp ./clab-resi-relay-only/tftpboot/config.txt ./config/bng2.cfg
+yes | cp ./clab-resi-relay-only/agg1/tftpboot/config.txt ./config/agg1.cfg
+#yes | cp ./clab-bng-relay-ipv4-ipv6/agg2/tftpboot/config.txt ./config/agg2.cfg
+yes | cp ./clab-resi-relay-only/olt1/tftpboot/config.txt ./config/olt1.cfg
+#yes | cp ./clab-bng-relay-ipv4-ipv6/olt2/tftpboot/config.txt ./config/olt2.cfg
+yes | cp ./clab-resi-relay-only/dhcp-server/tftpboot/config.txt ./config/dhcp-server.cfg

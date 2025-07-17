@@ -1,0 +1,51 @@
+---
+gnmic:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.9
+host11:
+    username: 
+    password: 
+    platform: linux
+    hostname: 172.20.20.2
+agg1:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.10
+agg2:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.11
+bng1:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.7
+bng2:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.3
+dhcp-server:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.4
+olt1:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.6
+olt2:
+    username: admin
+    password: admin
+    platform: nokia_sros
+    hostname: 172.20.20.5
+host1:
+    username: 
+    password: 
+    platform: openwrt
+    hostname: 172.20.20.8
